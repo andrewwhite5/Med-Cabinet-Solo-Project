@@ -42,6 +42,9 @@ dtm = pd.DataFrame(dtm.todense(), columns=tfidf.get_feature_names())
 # print(dtm.shape)
 # dtm.head()
 
+'''
+Nearest Neighbors
+'''
 # Create fake description
 test_description = ["My name is Bobby. The only kind of cannabis I've used was a light green and I think it came from Northeast Asia. I don't remember what it was called."]
 
