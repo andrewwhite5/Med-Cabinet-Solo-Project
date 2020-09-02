@@ -1,0 +1,40 @@
+<!-- web_app/templates/data.html -->
+
+{% extends "bootstrap_layout.html" %}
+{% set active_page = "STRAINS DATABASE" %}
+
+{% block content %}
+
+    <h2>WELCOME TO STRAINS DASHBOARD</h2>
+
+    <p>{{ message }}</p>
+
+    <table style="width:100%">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>STRAIN</th>
+          <th>RACE</th>
+          <th>MEDICAL</th>
+          <th>POSITIVE</th>
+          <th>NEGATIVE</th>
+          <th>FLAVORS</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for record in records %}
+        <tr>
+          <td>{{ record.id}}</td>
+          <td>{{ record.name}}</td>
+          <td>{{ record.race }}</td>
+          <td>{{ record.medical }}</td>
+          <td>{{ record.positive }}</td>
+          <td>{{ record.negative }}</td>
+          <td>{{ record.flavors }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    
+
+{% endblock %}
