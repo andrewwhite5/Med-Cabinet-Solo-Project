@@ -11,6 +11,45 @@ from web_app.services.strains_service import API
 
 strain_routes = Blueprint("strain_routes", __name__)
 
+
+'''
+Strain Recommendation
+'''
+# Load in dtm from nlp_dtm.pkl
+with open('./stats_model/pickle_models/nlp_dtm.pkl', 'rb') as nlp_pkl_file:
+    dtm = pickle.load(nlp_pkl_file)
+
+def give_recs(request):
+    """
+    Creates a JSON object with top 5 recommended strains (numbers).
+    Parameters
+    ----------
+    request : string
+        Description of strains user has used in the past, primarily focusing on
+        location of origin and physical appearance.
+    Returns
+    -------
+    strain_recs
+        A JSON object of recommended strains.
+    """
+
+    # Fit on DTM with 5 nn
+    nn = NearestNeighbors(n_neighbors=5, algorithm='kd_tree')
+    nn.fit(dtm)
+
+    # Query data for similar descriptions
+    new = tfidf.transform(request)
+    new
+
+    # 5 most similar strain descriptions and their probabilities
+    probs, strain_nums = nn.kneighbors(new.todense())
+
+    # Convert np.ndarray to pd.Series then to JSON
+    strain_recs = pd.Series(strain_nums[0]).to_json()
+
+    return strain_recs
+
+
 #CORS requirement to access apis
 @strain_routes.before_request
 def before_request():
@@ -161,3 +200,8 @@ def get_match(medical, medical1, positive): #,  medical1, positive1):
             "negative": match.negative
         })
     return jsonify(matches)
+
+@strain_routes.route('/query/<definition>', methods=['GET'])
+def get_rec(definition):
+    give_recs(request=definition)
+    return strain_recs

@@ -6,6 +6,12 @@ numpy = "*"
 python-dotenv = "*"
 matplotlib = "*"
 sklearn = "*"
+gunicorn = "*"
+psycopg2-binary = "*"
+Flask = "*"
+Flask-SQLAlchemy = "*"
+Flask-Migrate = "*"
+Flask-Cors = "*"
 
 [requires]
 python_version = "3.7"
